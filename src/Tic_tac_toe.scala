@@ -8,16 +8,16 @@ object Tic_tac_toe {
   def main(args:Array[String]) =
   {
     val symbol = ('1' to '9').toArray
-    val (player1,player2) = display(symbol)
+    val (player1,player2) = display(symbol)  //Call display method to initialize the game
     run_game(player1, player2, symbol)
   }
 
   def run_game(player1:String, player2:String, sym:Array[Char]): Unit =
   {
     var position_count = 0
-    var player_char = 'X'
+    var player_char = 'X'  //First player takes 'X'
     val wincombo = List((0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6))
-    for (i <- 0 to sym.length-1)
+    for (i <- 0 to sym.length-1)  //Check for the number of boxes filled
     {
       if (sym(i) == 'X' || sym(i) == 'O')
         position_count += 1
@@ -40,7 +40,7 @@ object Tic_tac_toe {
           sym(new_postion - 1) = player_char
         }
         print_board(sym)
-        if (check_win(wincombo, player_char, sym))
+        if (check_win(wincombo, player_char, sym))  //Call check_win after each move
         {
           if (player_char == 'X')
           {
@@ -59,7 +59,7 @@ object Tic_tac_toe {
           {
             val symbol = ('1' to '9').toArray
             //print_board(symbol)
-            val (player1,player2) = display(symbol)
+            val (player1,player2) = display(symbol)  //Continue with the same method call to initialize the game
             run_game(player1, player2, symbol)
           }
         else
@@ -79,7 +79,8 @@ object Tic_tac_toe {
   def player_move (player:String, player_symbol:Char, sym:Array[Char]) : Int= {
     println(player + " , choose a box to place an " + player_symbol + " into:")
     val player_move_position = readLine()
-    if ( (Try(player_move_position.toInt).isFailure) || (player_move_position.toInt < 0) || (player_move_position.toInt > sym.length) || (sym(player_move_position.toInt - 1) == 'X') || (sym(player_move_position.toInt - 1) == 'O'))
+    //Check if the player move is legitimate
+    if ( (Try(player_move_position.toInt).isFailure) || (player_move_position.toInt <= 0) || (player_move_position.toInt > sym.length) || (sym(player_move_position.toInt - 1) == 'X') || (sym(player_move_position.toInt - 1) == 'O'))
       {
         println("Invalid Move, please choose another box")
         player_move(player, player_symbol, sym)
